@@ -1,19 +1,22 @@
 import React, { useRef } from "react";
 import { Send } from "lucide-react";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
+
 const Form = () => {
   const formRef = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     emailjs
       .sendForm(
-        "service_5sy75vp",
-        "template_if4g0gi",
+        import.meta.env.VITE_SERVICE_ID,
+        import.meta.env.VITE_TEMPLATE_ID,
         formRef.current,
-        "k_Fm1zc4-fHaor8oa"
+        import.meta.env.VITE_PUBLIC_KEY
       )
       .then(
-        (result) => {
+        () => {
           alert("Message sent successfully!");
           formRef.current.reset();
         },
@@ -22,94 +25,97 @@ const Form = () => {
         }
       );
   };
+
   return (
     <form
       ref={formRef}
       onSubmit={handleSubmit}
       className="max-w-2xl w-full p-8 rounded-xl shadow-2xl bg-white space-y-6 mx-auto"
     >
-      {/* Form Title */}
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
         Let's Talk About Your Project
       </h2>
 
       <div className="space-y-4">
-        {/* ROW 1: Name and Email (Side-by-side on md+, stacked on mobile) */}
+        {/* Name + Email */}
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          {/* Name Field */}
+          {/* Name */}
           <div className="flex flex-col w-full">
             <label
               htmlFor="name"
-              className="text-sm font-semibold text-gray-700 mb-1" // Corrected text-x to text-sm
+              className="text-sm font-semibold text-gray-700 mb-1"
             >
               Name
             </label>
             <input
               type="text"
               id="name"
+              name="user_name"
               placeholder="Your name"
-              className="p-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+              className="p-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          {/* Email Field */}
+          {/* Email */}
           <div className="flex flex-col w-full">
             <label
               htmlFor="email"
-              className="text-sm font-semibold text-gray-700 mb-1" // Corrected text-x to text-sm
+              className="text-sm font-semibold text-gray-700 mb-1"
             >
               Email
             </label>
             <input
               type="email"
               id="email"
+              name="user_email"
               placeholder="name@email.com"
-              className="p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+              className="p-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
         </div>
 
-        {/* ROW 2: Subject Field (Full Width) */}
+        {/* Subject */}
         <div className="flex flex-col">
           <label
             htmlFor="subject"
-            className="text-sm font-semibold text-gray-700 mb-1" // Corrected text-x to text-sm
+            className="text-sm font-semibold text-gray-700 mb-1"
           >
             Subject
           </label>
           <input
             type="text"
             id="subject"
+            name="subject"
             placeholder="Project proposal, query, etc."
-            className="p-3 border border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+            className="p-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
-        {/* ROW 3: Message Field (Full Width) */}
+        {/* Message */}
         <div className="flex flex-col">
           <label
             htmlFor="message"
-            className="text-sm font-semibold text-gray-700 mb-1" // Corrected text-x to text-sm
+            className="text-sm font-semibold text-gray-700 mb-1"
           >
             Message
           </label>
           <textarea
             id="message"
+            name="message"
             rows="4"
             placeholder="Tell me about your project..."
-            className="p-3 border border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y transition duration-150"
+            className="p-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
             required
           ></textarea>
         </div>
       </div>
 
-      {/* Submit Button */}
       <button
         type="submit"
-        className="w-full flex justify-center items-center gap-2 p-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+        className="w-full flex justify-center items-center gap-2 p-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition"
       >
         <Send size={20} />
         Send Message
